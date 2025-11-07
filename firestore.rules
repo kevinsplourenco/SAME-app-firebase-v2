@@ -1,0 +1,46 @@
+{
+  "rules": {
+    "tenants": {
+      "{uid}": {
+        ".read": "request.auth.uid == {uid}",
+        ".write": "request.auth.uid == {uid}",
+        "products": {
+          "{document=**}": {
+            ".read": "request.auth.uid == {uid}",
+            ".write": "request.auth.uid == {uid}"
+          }
+        },
+        "suppliers": {
+          "{document=**}": {
+            ".read": "request.auth.uid == {uid}",
+            ".write": "request.auth.uid == {uid}"
+          }
+        },
+        "sales": {
+          "{document=**}": {
+            ".read": "request.auth.uid == {uid}",
+            ".write": "request.auth.uid == {uid}"
+          }
+        },
+        "cashflow": {
+          "{document=**}": {
+            ".read": "request.auth.uid == {uid}",
+            ".write": "request.auth.uid == {uid}"
+          }
+        },
+        "notifications": {
+          "{document=**}": {
+            ".read": "request.auth.uid == {uid}",
+            ".write": "request.auth.uid == {uid}"
+          }
+        },
+        "meta": {
+          "{document=**}": {
+            ".read": "request.auth.uid == {uid}",
+            ".write": "request.auth.uid == {uid}"
+          }
+        }
+      }
+    }
+  }
+}
