@@ -616,7 +616,7 @@ export default function SuppliersScreen() {
         visible={!!snack}
         onDismiss={() => setSnack(null)}
         duration={2500}
-        style={{ backgroundColor: "#1F2937" }}
+        style={{ backgroundColor: "#0F172A" }}
       >
         <Text style={{ color: "#FFFFFF" }}>{snack}</Text>
       </Snackbar>

@@ -15,9 +15,8 @@ import { onAuthStateChanged } from "firebase/auth";
 import { onSnapshot } from "firebase/firestore";
 import { theme } from "./theme";
 
-// App tabs
 import HomeScreen from "./screens/HomeScreen";
-import ProductFormScreen from "./screens/ProductFormScreen";
+import ProductListScreen from "./screens/ProductList";
 import SalesScreen from "./screens/SalesScreen";
 import CashFlowScreen from "./screens/CashFlowScreen";
 import SettingsScreen from "./screens/SettingsScreen";
@@ -33,7 +32,15 @@ const Tab = createBottomTabNavigator();
 const AuthStack = createNativeStackNavigator();
 const HomeStack = createNativeStackNavigator();
 
-// Tabbar customizada
+function HomeStackNavigator() {
+  return (
+    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+      <HomeStack.Screen name="HomeScreen" component={HomeScreen} />
+      <HomeStack.Screen name="Notifications" component={NotificationsScreen} />
+    </HomeStack.Navigator>
+  );
+}
+
 function CustomTabBar({ state, descriptors, navigation, modules }) {
   if (!state || !state.routes) {
     return null;
@@ -114,20 +121,6 @@ function CustomTabBar({ state, descriptors, navigation, modules }) {
   );
 }
 
-// Stack para Home + Notifications
-function HomeStackNavigator() {
-  return (
-    <HomeStack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <HomeStack.Screen name="HomeScreen" component={HomeScreen} />
-      <HomeStack.Screen name="Notifications" component={NotificationsScreen} />
-    </HomeStack.Navigator>
-  );
-}
-
 function MainTabs({ modules }) {
   return (
     <Tab.Navigator
@@ -142,11 +135,13 @@ function MainTabs({ modules }) {
         component={HomeStackNavigator}
         options={{ title: "Home" }}
       />
-      <Tab.Screen
-        name="Products"
-        component={ProductFormScreen}
-        options={{ title: "Prod." }}
-      />
+      {modules.products && (
+        <Tab.Screen
+          name="Products"
+          component={ProductListScreen}
+          options={{ title: "Prod." }}
+        />
+      )}
       {modules.sales && (
         <Tab.Screen
           name="Sales"
@@ -181,6 +176,7 @@ export default function App() {
   const [ready, setReady] = useState(false);
   const [user, setUser] = useState(null);
   const [modules, setModules] = useState({
+    products: true,
     sales: true,
     cashflow: true,
     notifications: true,
@@ -206,6 +202,7 @@ export default function App() {
         const s = snap.data();
         setModules(
           s.modules || { 
+            products: true,
             sales: true, 
             cashflow: true, 
             notifications: true,

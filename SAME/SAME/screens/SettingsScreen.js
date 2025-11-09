@@ -48,6 +48,7 @@ export default function SettingsScreen() {
   const [fantasyName, setFantasyName] = useState("");
   const [logoUrl, setLogoUrl] = useState("");
   const [mods, setMods] = useState({
+    products: true,
     sales: true,
     cashflow: true,
     notifications: true,
@@ -69,7 +70,15 @@ export default function SettingsScreen() {
         const s = snap.data();
         setFantasyName(s.fantasyName || "");
         setMods(
-          s.modules || { sales: true, cashflow: true, notifications: true }
+          s.modules || { 
+            products: true,
+            sales: true, 
+            cashflow: true, 
+            notifications: true,
+            suppliers: true,
+            reports: true,
+            integrations: true
+          }
         );
       }
     });
@@ -288,6 +297,19 @@ export default function SettingsScreen() {
                       gap: 12,
                     }}
                   >
+                    {/* Produtos */}
+                    <View style={styles.rowBetween}>
+                      <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+                        <MaterialCommunityIcons name="package-variant-closed" size={20} color="#6E56CF" />
+                        <Text style={{ color: "#FFFFFF", fontWeight: "600" }}>Produtos</Text>
+                      </View>
+                      <Switch
+                        value={mods.products}
+                        onValueChange={(v) => setMods({ ...mods, products: v })}
+                      />
+                    </View>
+                    <View style={{ height: 1, backgroundColor: "rgba(255, 255, 255, 0.1)" }} />
+
                     {/* Vendas */}
                     <View style={styles.rowBetween}>
                       <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
